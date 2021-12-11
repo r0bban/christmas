@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
-import Participant from '../views/Participant.vue'
 import ChristmasGift from '../views/ChristmasGift.vue'
+import ParticipantNEW from "../views/ParticipantNEW";
 
 Vue.use(VueRouter)
 
@@ -15,13 +15,13 @@ const routes = [
   {
     path:'/:participantToken',
     name: 'Participant',
-    component: Participant,
+    component: ParticipantNEW,
     props: true
   },
   { 
     path: '/',
     name: 'Home',
-    component: Participant
+    component: ParticipantNEW,
   },
   {
     path: '/about',

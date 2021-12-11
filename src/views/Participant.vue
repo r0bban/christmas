@@ -1,58 +1,60 @@
 <template>
   <main class="game-background">
-    <div v-if="this.showVerifyToken" class="login">
-      <form class="form" onsubmit="return false">
-        <!-- <div class="form-row"> -->
+    <section class="wrapper">
+      <div v-if="this.showVerifyToken" class="login">
+        <form class="form" onsubmit="return false">
+          <!-- <div class="form-row"> -->
           <p class="participant-error" v-if="participantError">{{ participantError }}</p>
-        <!-- </div> -->
-        <div class="form-row">
-          <!-- <label class="label" for="token">Nyckel: </label> -->
-          <input
-            class="input"
-            v-model="token"
-            type="text"
-            id="token"
-            placeholder="ange kod"
-          />
-        </div>
-        <div class="std-btn">
-          <button id="token-btn" :disabled="this.loading" @click="verify">
-            Verifiera
-          </button>
-        </div>
-      </form>
-    </div>
+          <!-- </div> -->
+          <div class="form-row">
+            <!-- <label class="label" for="token">Nyckel: </label> -->
+            <input
+                class="input"
+                v-model="token"
+                type="text"
+                id="token"
+                placeholder="ange kod"
+            />
+          </div>
+          <div class="std-btn">
+            <button id="token-btn" :disabled="this.loading" @click="verify">
+              Verifiera
+            </button>
+          </div>
+        </form>
+      </div>
 
-    <img src="@/assets/loader.png" v-if="this.loading" />
-    <div
-      v-if="this.partisipantExist && !this.loading"
-      class="participant-container"
-    >
-      <h1>{{ gameName }}</h1>
-      <h2>Hej {{ participantName }}!</h2>
-      <p>Här ser du vem du ska köpa julklapp till i {{ gameName }}.</p>
-      <p>Julklppen ska kosta mellan 200-230 kr.</p>
-      <article class="recipient-container">
-        <div v-if="this.showRecipient" class="recipient">
-          <h3>Grattis, du ska köpa julklapp till:</h3>
-          <h2 v-if="toBuyToExist">{{ toBuyToName }}</h2>
-          <h2 v-else>Oh nej, ej klart ännu 😢</h2>
-        </div>
-      </article>
-      <button v-if="!this.showRecipient" @click="toggleShowRecipient">
-        Se julklappsmottagare
-      </button>
-      <button
-        v-if="this.showRecipient && toBuyToExist"
-        @click="toggleShowRecipient"
+      <img src="@/assets/loader.png" v-if="this.loading"/>
+      <div
+          v-if="this.partisipantExist && !this.loading"
+          class="participant-container"
       >
-        Dölj julklappsmottagare
-      </button>
-      <button v-if="this.showRecipient && !toBuyToExist" @click="verify">
-        Kolla igen
-      </button>
-      <button id="clear-btn" @click="clear">Rensa kod från minnet</button>
-    </div>
+        <h1>{{ gameName }}</h1>
+        <h2>Hej {{ participantName }}!</h2>
+        <p>Här ser du vem du ska köpa julklapp till i {{ gameName }}.</p>
+        <p>Julklappen ska kosta mellan 200-230 kr.</p>
+        <article class="recipient-container">
+          <div v-if="this.showRecipient" class="recipient">
+            <h3>Grattis, du ska köpa julklapp till:</h3>
+            <h2 v-if="toBuyToExist">{{ toBuyToName }}</h2>
+            <h2 v-else>Oh nej, ej klart ännu 😢</h2>
+          </div>
+        </article>
+        <button v-if="!this.showRecipient" @click="toggleShowRecipient">
+          Se julklappsmottagare
+        </button>
+        <button
+            v-if="this.showRecipient && toBuyToExist"
+            @click="toggleShowRecipient"
+        >
+          Dölj julklappsmottagare
+        </button>
+        <button v-if="this.showRecipient && !toBuyToExist" @click="verify">
+          Kolla igen
+        </button>
+        <button id="clear-btn" @click="clear">Rensa kod från minnet</button>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -100,30 +102,28 @@ export default {
     },
     partisipantExist() {
       return this.$store.state.christmasModule.currentParticipant
-        ? this.$store.state.christmasModule.currentParticipant.name
-        : false;
+          ? this.$store.state.christmasModule.currentParticipant.name
+          : false;
     },
     participantName() {
       return this.$store.state.christmasModule.currentParticipant
-        ? this.$store.state.christmasModule.currentParticipant.name
-        : "";
+          ? this.$store.state.christmasModule.currentParticipant.name
+          : "";
     },
     toBuyToExist() {
-      return this.$store.state.christmasModule.currentParticipant
-        .buyingToParticipant
-        ? true
-        : false;
+      return !!this.$store.state.christmasModule.currentParticipant
+          .buyingToParticipant;
     },
     toBuyToName() {
       return this.$store.state.christmasModule.currentParticipant
-        ? this.$store.state.christmasModule.currentParticipant
-            .buyingToParticipant
-        : "";
+          ? this.$store.state.christmasModule.currentParticipant
+              .buyingToParticipant
+          : "";
     },
     gameName() {
       return this.$store.state.christmasModule.currentParticipant
-        ? this.$store.state.christmasModule.currentParticipant.giftGame
-        : "";
+          ? this.$store.state.christmasModule.currentParticipant.giftGame
+          : "";
     },
   },
 };
@@ -135,11 +135,13 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 0 auto;
   height: 100%;
   min-height: 100%;
   // padding: 20px;
   background: rgb(216, 73, 73);
 }
+
 .login {
   display: flex;
   flex-direction: column;
@@ -151,6 +153,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .participant-error {
   display: inherit;
   background: black;
@@ -160,6 +163,7 @@ export default {
   padding: 5px;
   box-sizing: border-box;
 }
+
 .form,
 .form-row {
   display: inherit;
@@ -223,6 +227,7 @@ export default {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 .recipient-container {
   text-align: center;
   border: whitesmoke;

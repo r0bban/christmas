@@ -150,7 +150,7 @@ export default {
       return this.$store.state.christmasModule.giftRecipientError;
     },
     showVerifyToken() {
-      return !this.partisipantExist && !this.loading;
+      return !this.participantExist && !this.loading;
     },
   },
 };

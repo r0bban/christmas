@@ -3,9 +3,10 @@ const christmasModule = {
     state: () => ({
         currentParticipant: null,
         participantToken: null,
-        reveald: false,
+        revealed: false,
         participantError: null,
         giftRecipientError: null,
+        errorHistory: [],
         giftRecipient: null
         // {
         //     version: 0,
@@ -32,7 +33,7 @@ const christmasModule = {
             state.giftRecipient = recipient;
         },
         setRevealdStatus(state, status) {
-            state.reveald = status;
+            state.revealed = status;
         },
         clearCurrentParticipant(state) {
             state.currentParticipant = null;
@@ -41,10 +42,15 @@ const christmasModule = {
         },
         setParticipantError(state, message) {
             state.participantError = message
+            state.errorHistory.push(message)
         },
         setGiftError(state, message) {
             state.giftRecipientError = message
-        }
+        },
+        clearErrorMessage(state) {
+            state.participantError = null
+            state.giftRecipientError = null
+        },
     },
     actions: {
         async authParticipant({ dispatch, commit }, participantToken) {
