@@ -22,5 +22,13 @@ export default {
             .catch(error => {
                 throw error
             })
-    }
+    },
+    finalizeGame(gameId, bearerToken) {
+        return API_CHRISTMAS.get("game/" + gameId + "/finalize",
+            {headers: {"Authorization": `Bearer ${bearerToken}`}})
+            .then(response => response)
+            .catch(error => {
+                throw error
+            })
+    },
 }

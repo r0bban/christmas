@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_AUTH = axios.create({
-    baseURL: `http://localhost:8081/api/auth`
+    baseURL: `https://io-r0bban-api.herokuapp.com/api/auth/`
 })
 
 export default {

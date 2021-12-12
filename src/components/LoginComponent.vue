@@ -27,10 +27,29 @@
       </div>
     </form>
     <p>{{this.getEmail}}</p>
+    <form class="form" onsubmit="return false">
+      <h1 class="header" for>Aktivera spel</h1>
+      <h3 v-if="authError">{{authError}}</h3>
+      <div class="formRow">
+        <label class="label" for="username">Aktivera spel: </label>
+        <input
+            class="input"
+            v-model="gameId"
+            type="text"
+            id="gameId"
+            placeholder="gameId"
+        />
+      </div>
+      <div class="std-btn">
+        <button @click="finalizeGame">Slutför</button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
+import christmasAPI from "@/api/christmas";
+
 export default {
   name: "Login",
   data() {
@@ -39,12 +58,28 @@ export default {
         username: "",
         password: "",
       },
+      gameId: ""
     };
   },
   methods: {
     login() {
       this.$store.dispatch("authUser", this.creds);
     },
+    async finalizeGame(){
+      try {
+        const response = await christmasAPI.finalizeGame(this.gameId, this.$store.state.authModule.accessToken);
+          this.$dtoast.pop({
+            color: 'black',
+            background: 'orange',
+            heading: `Response status`,
+            content: response.status.toString(),
+          })
+      } catch (error) {
+        this.$dtoast.pop({
+          heading: `Error status`,
+          content: error.toString(),
+        })      }
+    }
   },
   computed: {
     getEmail() {

@@ -3,10 +3,16 @@ import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
 import ChristmasGift from '../views/ChristmasGift.vue'
 import ParticipantNEW from "../views/ParticipantNEW";
+import LoginComponent from "../components/LoginComponent";
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: LoginComponent,
+  },
   {
     path:'/gift/:giftToken',
     component: ChristmasGift,
@@ -20,7 +26,7 @@ const routes = [
   },
   { 
     path: '/',
-    name: 'Home',
+    name: 'ParticipantHome',
     component: ParticipantNEW,
   },
   {
